@@ -1,28 +1,54 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Input from "./Components/Input";
+import ToDoList from "./Components/ToDoList";
+import "./App.css";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			todos: [
+				{ title: "buy eggs", complete: false },
+				{ title: "clean kitchen", complete: false }
+			]
+		};
+	}
+	addAToDo = todo => {
+		this.setState(state => ({
+			todos: [...state.todos, { title: todo, complete: false }]
+		}));
+	};
+
+	deleteAToDo = index => {
+		this.setState(state => ({
+			todos: [
+				...state.todos.slice(0, index),
+				...state.todos.slice(index + 1)
+			]
+		}));
+	};
+	completeAToDo = index => {
+		this.setState(state => ({
+			todos: [
+				...state.todos.slice(0, index),
+				{ ...state.todos[index], complete: true },
+				...state.todos.slice(index + 1)
+			]
+		}));
+	};
+
+	render() {
+		return (
+			<div className="App">
+				<Input addItem={this.addAToDo} />
+				<ToDoList
+					todos={this.state.todos}
+					onDelete={this.deleteAToDo}
+					onComplete={this.completeAToDo}
+				/>
+			</div>
+		);
+	}
 }
 
 export default App;
