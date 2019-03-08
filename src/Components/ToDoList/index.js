@@ -1,8 +1,9 @@
 import React from "react";
 import ToDoItem from "../ToDoItem";
+import PropTypes from "prop-types";
 
 const ToDoList = props => (
-	<ul>
+	<ul style={{ listStyle: "none" }}>
 		{props.todos.map((item, idx) => (
 			<ToDoItem
 				key={idx}
@@ -15,4 +16,9 @@ const ToDoList = props => (
 	</ul>
 );
 
+ToDoList.propTypes = {
+	todos: PropTypes.array.isRequired,
+	onDelete: PropTypes.func,
+	onComplete: PropTypes.func
+};
 export default ToDoList;

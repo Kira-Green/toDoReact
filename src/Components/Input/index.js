@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class Input extends React.Component {
 	constructor(props) {
@@ -10,9 +11,18 @@ class Input extends React.Component {
 
 	handleChange = event => {
 		const { value } = event.target;
+
 		this.setState(state => ({
 			value
 		}));
+	};
+
+	handleEnter = event => {
+		console.log(event.keyCode);
+		console.log(event.key);
+		if (event.keyCode === 13) {
+			this.handleClick();
+		}
 	};
 
 	handleClick = () => {
@@ -28,11 +38,19 @@ class Input extends React.Component {
 	render() {
 		return (
 			<div>
-				<input value={this.state.value} onChange={this.handleChange} />
+				<input
+					value={this.state.value}
+					onChange={this.handleChange}
+					onKeyUp={this.handleEnter}
+				/>
 				<button onClick={this.handleClick}>Add New Task</button>
 			</div>
 		);
 	}
 }
+
+Input.propTypes = {
+	addItem: PropTypes.func.isRequired
+};
 
 export default Input;

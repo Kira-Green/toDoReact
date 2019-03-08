@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Input from "./Components/Input";
 import ToDoList from "./Components/ToDoList";
 import "./App.css";
+import Header from "./Components/Header";
 
 class App extends Component {
 	constructor(props) {
@@ -31,7 +32,10 @@ class App extends Component {
 		this.setState(state => ({
 			todos: [
 				...state.todos.slice(0, index),
-				{ ...state.todos[index], complete: true },
+				{
+					...state.todos[index],
+					complete: !this.state.todos[index].complete
+				},
 				...state.todos.slice(index + 1)
 			]
 		}));
@@ -40,6 +44,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<Header />
 				<Input addItem={this.addAToDo} />
 				<ToDoList
 					todos={this.state.todos}
